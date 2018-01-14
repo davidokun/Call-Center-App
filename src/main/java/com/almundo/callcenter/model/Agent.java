@@ -30,24 +30,24 @@ public class Agent {
 
     public void attendCall(Call call) {
 
-        LOGGER.info( this.role + " No. " + this.id + " is attending Call No: " +  call.getId());
+        LOGGER.info("{} No. {} is attending Call No. {}", this.role, this.id, call.getId());
 
         call.setState(IN_PROGRESS);
         this.onCall = Boolean.TRUE;
 
         try {
             /* Simulates call duration between 5 and 10 seconds */
-            Thread.sleep(new Random().nextInt((10000 - 5000) + 1) + 5000);
+            Thread.sleep(new Random().nextInt((10000 - 5000) + 1) + 5000L);
 
             call.setState(FINISHED);
             this.onCall = Boolean.FALSE;
 
-            LOGGER.info("** " + this.role + " No. " + this.id + " Finish Call No: " +
-                    call.getId() + " with user "+ call.getUser().getName()+" about " +
-                    call.getSubject() + " **");
+            LOGGER.info("** {} No. {} Finish Call No: {} with user {} about {}",
+                    this.role, this.id, call.getId(), call.getUser().getName(), call.getSubject());
 
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            LOGGER.error("Agent Call finished unexpectedly: ", e);
+            Thread.currentThread().interrupt();
         }
     }
 

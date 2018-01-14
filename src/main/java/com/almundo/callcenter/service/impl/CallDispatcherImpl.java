@@ -1,7 +1,6 @@
 package com.almundo.callcenter.service.impl;
 
 import com.almundo.callcenter.common.AgentRole;
-import com.almundo.callcenter.controller.CallCenterController;
 import com.almundo.callcenter.model.Agent;
 import com.almundo.callcenter.model.Call;
 import com.almundo.callcenter.service.Dispatcher;
@@ -45,10 +44,6 @@ public class CallDispatcherImpl implements Dispatcher {
     /* A queue to hold all incoming calls*/
     private Queue<Call> callsQueue = new ConcurrentLinkedQueue<>();
 
-    public CallDispatcherImpl() {
-
-    }
-
     /**
      * This method register all agents in to the system
      */
@@ -76,7 +71,8 @@ public class CallDispatcherImpl implements Dispatcher {
                     /* Looks for call in queue every 5 seconds */
                     Thread.sleep(5000);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    LOGGER.error("An error occurred in the Dispatcher", e);
+                    Thread.currentThread().interrupt();
                 }
 
                 /* Search for free agents and dispatch the call */
