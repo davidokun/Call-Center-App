@@ -42,7 +42,9 @@ public class Agent {
             call.setState(FINISHED);
             this.onCall = Boolean.FALSE;
 
-            LOGGER.info("** " + this.role + " No. " + this.id + " Finish Call No: " +  call.getId() + " **");
+            LOGGER.info("** " + this.role + " No. " + this.id + " Finish Call No: " +
+                    call.getId() + " with user "+ call.getUser().getName()+" about " +
+                    call.getSubject() + " **");
 
         } catch (InterruptedException e) {
             e.printStackTrace();
