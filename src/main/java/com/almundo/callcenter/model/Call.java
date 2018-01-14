@@ -9,11 +9,13 @@ public class Call {
     private User user;
     private CallState state;
 
-    public Call(long id, String subject, User user, CallState state) {
+    public Call() {
+    }
+
+    public Call(long id, String subject, User user) {
         this.id = id;
         this.subject = subject;
         this.user = user;
-        this.state = state;
     }
 
     public long getId() {
