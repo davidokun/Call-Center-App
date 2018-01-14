@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+
+  sonar:
+      build: ./sonar
+      ports:
+        - "9000:9000"
+        - "9092:9092"
+
+  callcenter:
+    build: ./app
+    volumes:
+          - ../target:/usr/local/call-center-app
+    ports:
+      - 8080:8080
