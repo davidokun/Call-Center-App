@@ -23,6 +23,9 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<sonar.jacoco.reportPaths>target/coverage-reports/jacoco-ut.exec</sonar.jacoco.reportPaths>
+		<sonar.exclusions>
+			src/main/java/com/almundo/callcenter/CallCenterAppApplication.java
+		</sonar.exclusions>
 	</properties>
 
 	<dependencies>
@@ -57,6 +60,13 @@
 			<groupId>org.codehaus.sonar</groupId>
 			<artifactId>sonar-maven-plugin</artifactId>
 			<version>5.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.awaitility</groupId>
+			<artifactId>awaitility-proxy</artifactId>
+			<version>3.0.0</version>
+			<scope>test</scope>
 		</dependency>
 
 	</dependencies>
