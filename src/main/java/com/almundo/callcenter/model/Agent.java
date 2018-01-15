@@ -32,10 +32,11 @@ public class Agent {
 
         LOGGER.info("{} No. {} is attending Call No. {}", this.role, this.id, call.getId());
 
-        call.setState(IN_PROGRESS);
-        this.onCall = Boolean.TRUE;
-
         try {
+
+            call.setState(IN_PROGRESS);
+            this.onCall = Boolean.TRUE;
+
             /* Simulates call duration between 5 and 10 seconds */
             Thread.sleep(new Random().nextInt((10000 - 5000) + 1) + 5000L);
 

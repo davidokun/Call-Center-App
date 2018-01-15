@@ -48,7 +48,7 @@ public class CallDispatcherImpl implements Dispatcher {
      * This method register all agents in to the system
      */
     @PostConstruct
-    private void registerAgents() {
+    public void registerAgents() {
 
         IntStream.rangeClosed(1, 10).forEach(i -> agentList.put(i, new Agent(i, AgentRole.OPERATOR, Boolean.FALSE)));
 
