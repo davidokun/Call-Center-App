@@ -13,4 +13,4 @@ services:
     volumes:
           - ../target:/usr/local/call-center-app
     ports:
-      - 8080:8080
+      - "8080:8080"
