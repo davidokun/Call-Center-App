@@ -26,6 +26,10 @@ public class CallCenterController {
         this.dispatcher = dispatcher;
     }
 
+    /**
+     * Endpoint to receive 1 call
+     * @param call
+     */
     @PostMapping("call")
     public void receiveCall(@RequestBody Call call) {
 
@@ -36,7 +40,11 @@ public class CallCenterController {
         sendCallToDispatcher(call);
     }
 
-    @PostMapping("bulk/call")
+    /**
+     * Endpoint to receive multiple calls at once
+     * @param calls list of calls
+     */
+    @PostMapping("call/bulk")
     public void receiveCalls(@RequestBody List<Call> calls) {
 
         calls.forEach(call -> {
