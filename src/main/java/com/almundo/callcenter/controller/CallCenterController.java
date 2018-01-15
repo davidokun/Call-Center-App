@@ -1,10 +1,14 @@
 package com.almundo.callcenter.controller;
 
+import com.almundo.callcenter.common.CallCenterResponse;
 import com.almundo.callcenter.model.Call;
 import com.almundo.callcenter.service.Dispatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +25,9 @@ public class CallCenterController {
 
     private Dispatcher dispatcher;
 
+    @Value("${callcenter.response.message}")
+    private String callMessageResponse;
+
     @Autowired
     public CallCenterController(Dispatcher dispatcher) {
         this.dispatcher = dispatcher;
@@ -28,16 +35,21 @@ public class CallCenterController {
 
     /**
      * Endpoint to receive 1 call
-     * @param call
+     * @param call a call received from a user
      */
     @PostMapping("call")
-    public void receiveCall(@RequestBody Call call) {
+    public ResponseEntity<CallCenterResponse> receiveCall(@RequestBody Call call) {
 
 
         call.setId(new Random().nextInt(100));
         call.setState(OPEN);
         LOGGER.info("Call No: " + call.getId() + " Received in Call Center");
         sendCallToDispatcher(call);
+
+        CallCenterResponse callCenterResponse = new CallCenterResponse(HttpStatus.ACCEPTED.value(),
+                callMessageResponse);
+
+        return ResponseEntity.accepted().body(callCenterResponse);
     }
 
     /**
@@ -45,7 +57,7 @@ public class CallCenterController {
      * @param calls list of calls
      */
     @PostMapping("call/bulk")
-    public void receiveCalls(@RequestBody List<Call> calls) {
+    public  ResponseEntity<CallCenterResponse> receiveCalls(@RequestBody List<Call> calls) {
 
         calls.forEach(call -> {
             call.setId(new Random().nextInt(100));
@@ -53,6 +65,11 @@ public class CallCenterController {
             LOGGER.info("Call No: " + call.getId() + " Received in Call Center");
             sendCallToDispatcher(call);
         });
+
+        CallCenterResponse callCenterResponse = new CallCenterResponse(HttpStatus.ACCEPTED.value(),
+                callMessageResponse);
+
+        return ResponseEntity.accepted().body(callCenterResponse);
     }
 
 
