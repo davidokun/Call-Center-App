@@ -12,20 +12,26 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Random;
 
+import static com.almundo.callcenter.common.CallState.OPEN;
+
 @RestController("v1")
 public class CallCenterController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CallCenterController.class);
 
-    @Autowired
     private Dispatcher dispatcher;
 
+    @Autowired
+    public CallCenterController(Dispatcher dispatcher) {
+        this.dispatcher = dispatcher;
+    }
 
     @PostMapping("call")
     public void receiveCall(@RequestBody Call call) {
 
 
         call.setId(new Random().nextInt(100));
+        call.setState(OPEN);
         LOGGER.info("Call No: " + call.getId() + " Received in Call Center");
         sendCallToDispatcher(call);
     }
@@ -35,6 +41,7 @@ public class CallCenterController {
 
         calls.forEach(call -> {
             call.setId(new Random().nextInt(100));
+            call.setState(OPEN);
             LOGGER.info("Call No: " + call.getId() + " Received in Call Center");
             sendCallToDispatcher(call);
         });
